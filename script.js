@@ -114,7 +114,7 @@ async function fetch_playlist(url) {                            // gets url of p
 
         const tracks = tracks_detailed.flatMap(itm => {         // flatMap works great to remove any unwanted tracks
             // if name and image of track not available(for perticular country)
-            if(itm.track.name.length==0||itm.track.album.images.length==0)
+            if(!itm.track||itm.track.name.length==0||itm.track.album.images.length==0)
                 return [];                                      // dont consider this element(to remove an elememnt, just return empty string)
             
             // get required details form resulted tracks
@@ -130,7 +130,7 @@ async function fetch_playlist(url) {                            // gets url of p
             const artists = a.length == 1 ? a[0] : [ a.slice(0, -1).join(", "), a[a.length - 1] ].join(" and ");
             // return required values in object notation
             return ({
-                name:itm.track.name,
+                name: itm.track.name,
                 img_small: image_small,
                 img_big: image_big,
                 artists: artists,
@@ -244,6 +244,12 @@ function removeProgress() {
         }
     });
 }
+
+function makeTextFile (text) {
+    const data = new Blob([text], {type: 'text/plain'});
+    // returns a URL to be used as a href
+    return window.URL.createObjectURL(data);
+};
 
 // Youtube api keys
 // multiple keys for better performance
@@ -376,6 +382,15 @@ download_btn.addEventListener('click',async function downloader () {
         return;
     }
 
+    // download list of selected tracks
+    const text_download=document.createElement('a');
+    text_download.style.display='null';
+    text_download.setAttribute('download', 'Downloaded Tracks.txt');
+    text_download.href = makeTextFile([...selected_songs].map(song =>song.title).join(' \n'));
+    document.body.appendChild(text_download);
+    text_download.click();
+    document.body.removeChild(text_download);
+
     removeProgress();
     download_btn.classList.add('progress-70');
 
@@ -383,8 +398,9 @@ download_btn.addEventListener('click',async function downloader () {
     // its done this way since the youtube_mp3_converter returns a page which needs to be loaded to download the mp3
     // and I cant load it in an iframe as this gives "Refused to display in a frame because it set 'X-Frame-Options' to 'SAMEORIGIN'" error
     // basically the api gives a link which is not allowed to be opened in an iframe, hence I am using pop-ups to download the track
-    Promise.all(downloadLinks.map((songLink,i) =>{
+    Promise.all(downloadLinks.map(async (songLink,i) =>{
         const wnd = window.open(songLink, `connectWindow${i}`, "width=450,height=200,scrollbars=yes");          // opens the track download link in a new popup
+        await waitStart(wnd);                               // waits till the page is loaded
         return new Promise((resolve,reject) => {
             setTimeout(function () {                        // close popup after certain time, onload cant be used due to Same-origin policy
                 try {
@@ -393,14 +409,16 @@ download_btn.addEventListener('click',async function downloader () {
                 } catch (err) {
                     reject(err);
                 }
-            }, 5400+i*540);
+            }, 5400+1000*i);
         });
-    })).catch((err)=>{
+    }))
+    .catch((err)=>{
         removeProgress();
         btn_wrapper.classList.remove('is-active');
         console.log(err);
         alert('Please allow pop-ups and retry.');           // show alert to allow popups
     });
+    
     download_btn.removeEventListener('click',downloader);   // remove listener for click
     removeProgress();
     download_btn.classList.add('progress-100');             // make progress as 100%
@@ -409,3 +427,13 @@ download_btn.addEventListener('click',async function downloader () {
         btn_wrapper.classList.add('animation-ended');
     }, 1200);
 });
+
+
+function waitStart(wnd) {
+    return new Promise((resolve,reject)=>{
+        setInterval(() => {
+            if(wnd.length==1)                               // window.length becomes 1 when page loaded
+                resolve();
+        }, 100);
+    });
+}

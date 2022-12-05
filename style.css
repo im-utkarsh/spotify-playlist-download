@@ -10,6 +10,7 @@ html {
     -webkit-font-smoothing: antialiased;
     height: 100%;
     font-size: 62.5%;
+    user-select: none;
 }
 * {
     box-sizing: inherit;
@@ -637,6 +638,7 @@ input:focus,input[type=text]:focus-visible{
 }
 .animation-ended .btn {
     will-change: auto;
+    cursor: default;
 }
 .btn__text {
     display: block;
