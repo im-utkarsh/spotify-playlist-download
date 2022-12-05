@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Playlist Download</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Lato:300,400,900&display=swap" rel="stylesheet" /> -->
+</head>
+<body>
+    <div class="button select_all">Select ALL</div>
+    <form class="fetch">
+        <input type="text" name="playlist_link" placeholder="https://open.spotify.com/playlist/playlist_id" pattern="https:\/\/open\.spotify\.com\/playlist\/[a-zA-Z0-9]{22}" title="Enter valid playlist URL" required>
+        <button name="button" class="button">Fetch</button>
+    </form>
+    <div id="container-loading">
+        <div class="divider" aria-hidden="true"></div>
+        <p class="loading-text" aria-label="Loading">
+            <span class="letter" aria-hidden="true">L</span>
+            <span class="letter" aria-hidden="true">o</span>
+            <span class="letter" aria-hidden="true">a</span>
+            <span class="letter" aria-hidden="true">d</span>
+            <span class="letter" aria-hidden="true">i</span>
+            <span class="letter" aria-hidden="true">n</span>
+            <span class="letter" aria-hidden="true">g</span>
+        </p>
+    </div>
+    <div class="error-wrapper">
+        <div class="error">
+            <div class="number">4</div>
+            <div class="illustration">
+                <div class="circle"></div>
+                <div class="clip">
+                    <div class="paper">
+                        <div class="face">
+                            <div class="eyes">
+                                <div class="eye eye-left"></div>
+                                <div class="eye eye-right"></div>
+                            </div>
+                            <div class="mouth"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="number">4</div>
+        </div>
+        <div class="text">Oops. We were not able to complete your request.</div>
+        <a class="button" href="">Back Home</a>
+    </div>
+    <div class="playlistContainer"></div>
+    <!-- <div class="button download">Download</div> -->
+    <div class="btn-wrapper">
+        <div class="btn download">
+            <span class="btn__text">Download</span>
+        </div>
+        <span class="btn__text btn__end_text">Downloads Started</span>
+    </div>
+</body>
+<script src="script.js"></script>
+<!-- <script src="dummy.js"></script> -->
+</html>
