@@ -272,18 +272,13 @@ download_btn.addEventListener('click',async function downloader () {
             if(yt_song.ok)
                 yt_songs_promises.push(yt_song.json());                         // return json response as promise
             else if(yt_song.status==403){                                       // status 403 indicated quota exceeded
-                if(yt_key_no<yt_api_keys.length){                               // if other api keys available to try
-                    console.log(`Quota of key ${yt_key_no+1} exceeded`);
-                    yt_key_no++;                                                // go to next key
-                    i--;                                                        // this track's id is not available, try for this track again
-                    continue;
-                } else {                                                        // if no other api key to try
-                    console.log('Youtube API Quota Exceeded');
-                    throw new Error('Youtube API Quota Exceeded');              // throw error
-                }
+                console.log(`Quota of key ${yt_key_no+1} exceeded`);
+                yt_key_no++;                                                // go to next key
+                i--;                                                        // this track's id is not available, try for this track again
+                continue;
             } else {
                 console.log('Error with Youtube API');
-                throw new Error("Error with Youtube API");                      // if any other kind of error
+                throw new Error("Error with Youtube API");                      // if any error
             }
         }
     } catch (error) {
@@ -294,7 +289,7 @@ download_btn.addEventListener('click',async function downloader () {
     // promise.all weights for all the promises to resolve, then take the resulting array and get videoId for every track
     const yt_songs=await Promise.all(yt_songs_promises).then(res=>res.map(ele=>ele.items[0].id.videoId));
 
-    // show loading as 30%
+    // show progress as 30%
     download_btn.classList.add('progress-30');
 
 // this code can be used if only 1 key is available
@@ -373,8 +368,10 @@ download_btn.addEventListener('click',async function downloader () {
     // if any one of the promises reject, Promise.all rejects and returns undefined to popup_check, when tried .reduce/.length on undefined object,
     // we get error, which is caught and function is returned without going forward
     try {
-        if(popup_check.reduce((a, b) => a + b, 0)!=popup_check.length)
+        if(popup_check.reduce((a, b) => a + b, 0)!=popup_check.length){
+            alert('Please allow pop-ups and retry.');
             return;
+        }
     } catch (error) {
         return;
     }
