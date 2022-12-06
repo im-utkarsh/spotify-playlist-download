@@ -101,7 +101,7 @@ async function fetch_playlist(url) {                            // gets url of p
 
         const playlist_id=url.split('/').at(-1);                // get playlist id from playlist link
         // gets tracks form playlist by making request to spotify using playlist_id and options, converts result from json
-        let playlist = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`,options_spotify).then(res=>res.json())
+        let playlist = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`,options_spotify).then(res=>res.json());
         let tracks_detailed=playlist.items;                     // get required values from the json object
         const total_tracks=playlist.total;                      // total tracks
         let loaded=playlist.items.length;                       // number of tracks fetched this time
