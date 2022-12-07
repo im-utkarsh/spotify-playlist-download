@@ -91,7 +91,6 @@ This is a static site made using plain HTML, CSS and vanilla JavaScript. Most of
   Since popups with timeout are used, there no way of knowing if the popup page was loaded and the download started.<br>
   This can be fixed by using an api which results with direct link for the mp3 rather than an indirect link.
 
----
 ## Conclusion
 
 This was a small project solely made by me, to brush-up and update my css/javascript skills along with learning how fetch API works. The project contains some problems which can be addressed by giving some more time and resources.
