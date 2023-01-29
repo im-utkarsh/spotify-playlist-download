@@ -1,13 +1,13 @@
-# Spotify Playlist Download
+# 📝Spotify Playlist Download
 
 A simple web-app which takes in a spotify playlist url and lets you select tracks to download from that playlist.
 
-## Description and Working
+## ⚙️Description and Working
 
 Open [this](https://im-utkarsh.github.io/spotify-playlist-download/) link in any browser and paste your spotify playlist (make sure the playlist is set as public). It will fetch the playlist from spotify and show tracks it contains. Select the tracks you want to download and click download to start downloading. Along with the tracks, it will also download a txt file containing the selected tracks.<br>
 The app works by fist making a request to the spotify api to get all the tracks contained in the playlist. Then it makes request to youtube api to get a youtube video corrosponding to every song title present in the playlist. Following that, download links for every mp3 corrosponding to the videos are generated using a  youtube-to-mp3 api. The links provided by the free version of the api are needed to be opened one by one, and hence a popup is created which closes automatically after some time (probably the download starts in that interval😅).
 
-## How I build this project
+## 🛠️How I build this project
 
 This is a static site made using plain HTML, CSS and vanilla JavaScript. Most of the time for this project has been spend on the JavaScript part which I will try to unfold here.
 
@@ -84,18 +84,18 @@ This is a static site made using plain HTML, CSS and vanilla JavaScript. Most of
     });
   ```
 
-## Problems
+## 📌Problems
 
 * The first problem is regarding youtube api quota which is partially fixed by using multiple api keys.
 * The main problem with this web app is that all the downloads are not certainly captured.<br>
   Since popups with timeout are used, there no way of knowing if the popup page was loaded and the download started.<br>
   This can be fixed by using an api which results with direct link for the mp3 rather than an indirect link.
 
-## Conclusion
+## 🔚Conclusion
 
 This was a small project solely made by me, to brush-up and update my css/javascript skills along with learning how fetch API works. The project contains some problems which can be addressed by giving some more time and resources.
 
-## Acknowledgments
+## 📚Acknowledgments
 
 Inspiration, code snippets, etc.
 * [Spotify API](https://developer.spotify.com/) - Api for spotify
@@ -107,11 +107,9 @@ Inspiration, code snippets, etc.
 * [404 Page Not Found](https://codepen.io/joaosousa/pen/ZEEKWmv) - error animation
 * [Animated Download Button](https://codepen.io/ChucKN0risK/pen/GqMeZz) - download button animation
 
-<br>
 
 ---
 
-<br>
 
 Utkarsh Chauhan  
 [@UTK_CHAUHAN](https://twitter.com/UTK_CHAUHAN)
